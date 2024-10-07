@@ -5,16 +5,42 @@ body{
 }
 h1,h2{
     text-align: center;
-    width: 100%;
-    display: block;
+    width: 80%;
+    background-color: rgb(37, 7, 94);
 }
 .main{
-background-color: rgb(7, 18, 43);
-padding: 5px;
-padding-top: 30px;
-width: 60%;
-flex-direction: column;
-align-items: center;
-margin-inline:20%;
-min-width: 60%;
+    background-color: rgb(7, 18, 43);
+    padding: 5px;
+    padding-top: 30px;
+    width: 60%;
+    flex-direction: row; /* Pozostaw układ w rzędzie */
+    margin-inline: 20%;
+    display: flex;
+    min-width: 500px;
+    flex-wrap: wrap; /*zawija*/
+    justify-content: space-around;
+    flex-shrink: 0;
+}
+.produkt
+{
+    width: 400px;
+    background-color: white;
+    height: 400px;
+    margin-block: 4px;
+    color:red;
+    margin:20px;
+    padding: 20px;
+    flex-shrink: 0;
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content:center;
+}
+.produkt img{
+    width: 300px;
+    height: 300px;
+}
+.produkt:hover{
+    border: solid;
+    border-color: red;
 }

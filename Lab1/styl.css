@@ -5,6 +5,7 @@ body{
 }
 h1,h2{
     text-align: center;
+    width: 100%;
 }
 .main{
 background-color: rgb(7, 18, 43);
