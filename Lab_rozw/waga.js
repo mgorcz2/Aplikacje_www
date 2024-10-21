@@ -21,3 +21,13 @@ function calculateWeight() {
 		document.getElementById('result').innerText=`Wprowadz prawidlowe dane`;
 		}
 }
+
+
+$(document).ready(function() {
+    console.log("Plik JavaScript został załadowany!"); // Sprawdź w konsoli
+    $(".main").on("click", function() {
+        $(this).animate({
+            backgroundColor: "red"
+        }, 1500);
+    });
+});
