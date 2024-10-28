@@ -1,0 +1,3 @@
+<?php
+$imienazwisko = 'Marcin Gorczyński'
+ ?>
