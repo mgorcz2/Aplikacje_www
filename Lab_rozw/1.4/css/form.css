@@ -1,0 +1,59 @@
+body {
+    font-family: 'Century Gothic';
+    background-image: url('../img/tlo.jpg');
+    color: white;
+}
+
+h1,
+h2 {
+    text-align: center;
+    width: 100%;
+    background-color: rgb(37, 7, 94);
+}
+
+.main {
+    background-color: rgb(7, 18, 43);
+    padding: 5px;
+    padding-top: 30px;
+    width: 60%;
+    flex-direction: column;
+    /* Pozostaw układ w rzędzie */
+    margin-inline: 20%;
+    display: flex;
+    min-width: 500px;
+    align-items: center;
+}
+
+.formularz {
+    width: 95%;
+    background-color: rgb(30, 17, 78);
+    padding-block: 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+form input {
+    text-align: center;
+    width: 80%;
+    background-color: rgba(10, 10, 97, 0);
+    color: white;
+    font-size: large;
+    margin-block: 10px;
+    border-color: rgba(255, 255, 255, 0.301);
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+}
+
+form textarea {
+    border-radius: 5px;
+    width: 80%;
+    resize: none;
+    height: 300px;
+    background-color: rgb(172, 168, 185);
+}
