@@ -10,6 +10,15 @@ h2 {
     width: 100%;
 }
 
+.filmy{
+    background-color: rgb(7, 18, 43);
+    padding: 5px;
+    padding-top: 30px;
+    width: 30%;
+    display: flex;
+    margin-inline: 20%;
+    min-width: 60%;
+}
 .main {
     background-color: rgb(7, 18, 43);
     padding: 5px;

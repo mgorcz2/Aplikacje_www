@@ -1,17 +1,12 @@
-body {
-    font-family: 'Century Gothic';
-    background-image: url('../img/tlo.jpg');
-    color: white;
-}
 
-h1,
-h2 {
+.main_shop h1,
+.main_shop h2 {
     text-align: center;
     width: 80%;
     background-color: rgb(37, 7, 94);
 }
 
-.main {
+.main_shop {
     background-color: rgb(7, 18, 43);
     padding: 5px;
     padding-top: 30px;

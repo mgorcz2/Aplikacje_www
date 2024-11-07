@@ -24,8 +24,8 @@ function calculateWeight() {
 
 
 $(document).ready(function() {
-    console.log("Plik JavaScript został załadowany!"); // Sprawdź w konsoli
-    $(".main").on("click", function() {
+    console.log("Załadowany!"); // Sprawdź w konsoli
+    $(document).on("click",".main_glowna", function() {
         $(this).animate({
             backgroundColor: "red"
         }, 1500);
