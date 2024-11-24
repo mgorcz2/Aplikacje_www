@@ -1,0 +1,29 @@
+.main_glowna h1,
+.main_glowna h2 {
+    text-align: center;
+    width: 100%;
+}
+.main_glowna {
+    background-color: rgb(7, 18, 43);
+    padding: 5px;
+    padding-top: 30px;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-inline: 20%;
+    min-width: 60%;
+    height: 400px;
+
+}
+
+.main_glowna .kalkulator {
+    background-color: rgb(53, 57, 123);
+    height: 400px;
+}
+
+.main_glowna .text-box {
+    margin-inline: 0;
+    float: left;
+    width: 100%;
+}
