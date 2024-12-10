@@ -1,4 +1,8 @@
 <?php
+// -------------------------------
+// FORMULARZ KONTAKTOWY
+// -------------------------------
+
 // Funkcja pokazująca formularz kontaktowy
 function PokazKontakt()
 {
@@ -21,13 +25,15 @@ function WyslijMailKontakt($odbiorca)
 {
     if (empty($_POST['temat']) || empty($_POST['tresc']) || empty($_POST['email'])) {
         echo '[nie_wypelniles_pola]';
-        PokazKontakt(); // Powrot do formularza
+        PokazKontakt(); // Powrót do formularza
     } else {
-        $mail['subject'] = $_POST['temat'];
-        $mail['body'] = $_POST['tresc'];
-        $mail['sender'] = $_POST['email'];
+        // Dane wiadomości
+        $mail['subject'] = htmlspecialchars($_POST['temat'], ENT_QUOTES, 'UTF-8');
+        $mail['body'] = htmlspecialchars($_POST['tresc'], ENT_QUOTES, 'UTF-8');
+        $mail['sender'] = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
         $mail['recipient'] = $odbiorca; // Adres odbiorcy
 
+        // Nagłówki wiadomości
         $header = "From: Formularz kontaktowy <" . $mail['sender'] . ">\n";
         $header .= "MIME-Version: 1.0\nContent-Type: text/plain; charset=utf-8\nContent-Transfer-Encoding: 8bit\n";
         $header .= "X-Sender: <" . $mail['sender'] . ">\n";
@@ -35,6 +41,7 @@ function WyslijMailKontakt($odbiorca)
         $header .= "X-Priority: 3\n";
         $header .= "Return-Path: <" . $mail['sender'] . ">\n";
 
+        // Wysyłanie maila
         mail($mail['recipient'], $mail['subject'], $mail['body'], $header);
 
         echo "Wiadomość wysłana!";
@@ -44,25 +51,33 @@ function WyslijMailKontakt($odbiorca)
 // Funkcja przypominająca hasło
 function PrzypomnijHaslo($odbiorca, $haslo)
 {
+    // Dane wiadomości
     $mail['subject'] = "Przypomnienie hasła";
-    $mail['body'] = "Twoje hasło do panelu administracyjnego to: " . $haslo;
+    $mail['body'] = "Twoje hasło do panelu administracyjnego to: " . htmlspecialchars($haslo, ENT_QUOTES, 'UTF-8');
     $mail['recipient'] = $odbiorca;
 
+    // Nagłówki wiadomości
     $header = "From: Formularz kontaktowy <no-reply@twojastrona.com>\n";
     $header .= "MIME-Version: 1.0\nContent-Type: text/plain; charset=utf-8\nContent-Transfer-Encoding: 8bit\n";
     $header .= "X-Mailer: PHP/" . phpversion() . "\n";
     $header .= "X-Priority: 3\n";
 
+    // Wysyłanie maila
     mail($mail['recipient'], $mail['subject'], $mail['body'], $header);
 
     echo "Hasło zostało wysłane!";
 }
 
-// Obsługa akcji z formularza
+// -------------------------------
+// OBSŁUGA AKCJI FORMULARZA
+// -------------------------------
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Obsługa wysyłania wiadomości
     if ($_POST['action'] == 'send_mail') {
         WyslijMailKontakt("example@gmail.com"); // Podaj swój e-mail odbiorcy
-    } elseif ($_POST['action'] == 'remind_password') {
+    }
+    // Obsługa przypominania hasła
+    elseif ($_POST['action'] == 'remind_password') {
         PrzypomnijHaslo("example@gmail.com", "twojehaslo123"); // Przykładowe hasło
     }
 }

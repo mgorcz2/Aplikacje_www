@@ -1,6 +1,14 @@
 <?php
+
+// -----------------------------------------------------------------------------
+// Plik administracyjny
+// Funkcje zarządzania: logowanie, dodawanie, edycja i usuwanie podstron
+// -----------------------------------------------------------------------------
+
 session_start();
 require("cfg.php");
+
+// Funkcja do logowania użytkownika
 function FormularzLogowania()
 {
     $wynik = '
@@ -42,7 +50,7 @@ if (isset($_POST['skip_login'])) {
 }
 
 // Jeśli formularz logowania został wysłany
-if (isset($_POST['x1_submit'])) {
+if (isset($_POST['x1_submit'])) {                   
     $email = $_POST['login_email'] ?? '';
     $password = $_POST['login_pass'] ?? '';
     if ($email === $login && $password === $pass) {
@@ -150,6 +158,8 @@ function ListaPodstron() {
 echo '<br><br><h2>Witaj w panelu administracyjnym!</h2>';
 ListaPodstron();
 
+
+//Funkcja do dodawania podstron
 function DodajNowaPodstrone() {
     global $link;
 
