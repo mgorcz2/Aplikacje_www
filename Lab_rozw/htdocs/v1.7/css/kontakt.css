@@ -4,17 +4,18 @@
     padding-top: 30px;
     width: 60%;
     flex-direction: column;
-    /* Pozostaw układ w rzędzie */
     margin-inline: 20%;
     display: flex;
     min-width: 500px;
     align-items: center;
+    color: white;
 }
 
 .formularz {
     width: 95%;
     background-color: rgb(30, 17, 78);
     padding-block: 10px;
+    border-radius: 5px;
 }
 
 form {
@@ -24,23 +25,29 @@ form {
     width: 100%;
 }
 
-form input {
+form input, form textarea {
     text-align: center;
     width: 80%;
     background-color: rgba(10, 10, 97, 0);
     color: white;
     font-size: large;
     margin-block: 10px;
-    border-color: rgba(255, 255, 255, 0.301);
-    border-top: 0;
-    border-left: 0;
-    border-right: 0;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 10px;
+    border-radius: 5px;
 }
 
-form textarea {
+form input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-size: medium;
+    padding: 10px 20px;
+    border: none;
     border-radius: 5px;
-    width: 80%;
-    resize: none;
-    height: 300px;
-    background-color: rgb(172, 168, 185);
+    transition: background-color 0.3s;
+}
+
+form input[type="submit"]:hover {
+    background-color: #45a049;
 }

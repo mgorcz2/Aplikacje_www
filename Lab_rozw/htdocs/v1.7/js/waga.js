@@ -22,12 +22,16 @@ function calculateWeight() {
 		}
 }
 
-
+//jQuery ktory zmienia wielkosc przycisku po wcisnieciu
 $(document).ready(function() {
-    console.log("Załadowany!"); // Sprawdź w konsoli
-    $(document).on("click",".main_glowna", function() {
+    $(document).on("mouseenter","button", function() {
         $(this).animate({
-            backgroundColor: "red"
-        }, 1500);
+            backgroundColor: "rgb(108, 185, 141)"
+        }, 300);
+    });
+	$(document).on("mouseleave", "button", function() {
+        $(this).animate({
+			backgroundColor: " #4a4aff"
+        }, 300);
     });
 });

@@ -1,19 +1,14 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <!-- Ustawienie typu zawartości oraz kodowania znaków -->
     <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
-    <!-- Ustawienie języka dokumentu na polski -->
     <meta http-equiv="Content-Language" content="pl" />
-    <!-- Informacja o autorze strony -->
     <meta name="Author" content="Marcin Gorczyński" />
-    <!-- Tytuł strony -->
     <title>Loty kosmiczne</title>
-    <!-- Dołączenie arkuszy stylów -->
     <link rel="stylesheet" href="css/menu.css"> <!-- Styl dla menu -->
     <link rel="stylesheet" href="css/glowna_styl.css"> <!-- Styl główny -->
     <link rel="stylesheet" href="css/styl.css"> <!-- Dodatkowe style -->
-    <link rel="stylesheet" href="css/form.css"> <!-- Styl formularzy -->
+    <link rel="stylesheet" href="css/kontakt.css"> <!-- Styl formularzy -->
     <link rel="stylesheet" href="css/sklep.css"> <!-- Styl sklepu -->
     <!-- Dołączenie bibliotek i skryptów JavaScript -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery -->
@@ -23,14 +18,11 @@
 </head>
 <body onload="gettheDate()"> <!-- Po załadowaniu strony uruchamia funkcję wyświetlającą datę -->
 <?php
-// Dołączenie plików PHP do obsługi wyświetlania stron i funkcji administratora
+// Dołączenie pliku PHP do obsługi wyświetlania stron
 require('showpage.php');
-require('admin/admin.php');
 
-// Sprawdzanie parametru 'idp' w URL i ładowanie odpowiedniej podstrony
 if (!isset($_GET['idp']) || $_GET['idp'] == '') {
-    // Jeśli parametr 'idp' nie jest ustawiony lub jest pusty, załaduj stronę domyślną
-    $strona = PokazPodstrone(9);
+    $strona = PokazPodstrone(1);
 } elseif ($_GET['idp'] == 'calc') {
     $strona = PokazPodstrone(1); // Kalkulator
 } elseif ($_GET['idp'] == 'start') {
@@ -45,10 +37,12 @@ if (!isset($_GET['idp']) || $_GET['idp'] == '') {
     $strona = PokazPodstrone(7); // Kontakt
 } elseif ($_GET['idp'] == 'filmy') {
     $strona = PokazPodstrone(8); // Filmy
-}
+} elseif ($_GET['idp'] == 'koszyk') {
+    $strona = PokazPodstrone(13); // Koszyk
+} 
 
-// Wywołanie funkcji generującej menu i podstronę
-$menu = PokazPodstrone(2); // Generowanie menu strony
+
+$menu = PokazPodstrone(2); 
 echo $menu; // Wyświetlenie menu
 echo $strona; // Wyświetlenie zawartości podstrony
 
@@ -57,5 +51,6 @@ $nr_indeksu = '169240';
 $nrGrupy = 'ISI 1';
 // echo 'Marcin Gorczynski '.$nr_indeksu.' GRUPA '.$nrGrupy;
 ?>
+<a href="admin/login.php" class="admin_button">Zaloguj</a>
 </body>
 </html>

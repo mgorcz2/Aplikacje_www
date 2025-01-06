@@ -1,9 +1,12 @@
-
-.main_shop h1,
-.main_shop h2 {
+.main_shop h1 {
     text-align: center;
     width: 80%;
     background-color: rgb(37, 7, 94);
+}
+.main_shop h2 {
+    text-align: center;
+    width: 80%;
+    background-color: rgb(88, 40, 177);
 }
 
 .main_shop {
@@ -25,28 +28,67 @@
 .produkt {
     width: 400px;
     background-color: white;
-    height: 400px;
-    margin-block: 4px;
-    color: red;
     margin: 20px;
     padding: 20px;
-    flex-shrink: 0;
+    border: solid;
+    border-color: rgb(0, 247, 173);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    border: solid;
-    border-color: rgb(0, 247, 173);
+    justify-content: flex-start;
+    height: auto; /* Automatyczna wysokość w zależności od zawartości */
     transition: 1s;
 }
 
 .produkt img {
-    height: 300px;
-    width: 250px;
+    max-height: 200px; /* Ograniczenie wysokości obrazka */
+    max-width: 100%; /* Obrazek dostosowuje się do szerokości kafelka */
+    margin-bottom: 15px;
+}
+
+.produkt .nazwa {
+    font-size: 18px;
+    font-weight: bold;
+    color: red;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.produkt .p,
+.product label{
+    font-size: 14px;
+    margin: 5px 0;
+    color: rgb(0, 0, 0);
+    text-align: center;
+}
+
+.produkt .cena {
+    color: green;
+    font-weight: bold;
+}
+.produkt .quantity {
+    background-color: #ffffffd2;
+    font-size: 14px;
+    margin: 5px 0;
+    color: rgb(0, 0, 0);
+    width: 50px;
+}
+.produkt button {
+    margin-top: 15px;
+    padding: 10px 15px;
+    background-color: #4a4aff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.produkt button:hover {
+    background-color: darkblue;
 }
 
 .produkt:hover {
-    border: solid;
     border-color: red;
     transition: 1s;
 }

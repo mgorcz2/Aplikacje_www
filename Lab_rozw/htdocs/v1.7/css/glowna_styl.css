@@ -13,7 +13,7 @@
     align-items: center;
     margin-inline: 20%;
     min-width: 60%;
-    height: 400px;
+    height: auto;
 
 }
 
@@ -26,4 +26,58 @@
     margin-inline: 0;
     float: left;
     width: 100%;
+}
+button {
+    background-color: #2e0cac;
+    color: white; 
+    border: none;
+    padding: 10px 20px; 
+    text-align: center; 
+    text-decoration: none; 
+    display: inline-block; 
+    font-size: 16px;
+    margin: 10px 5px; 
+    cursor: pointer; 
+    border-radius: 5px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+    transition: background-color 0.3s, transform 0.2s; 
+}
+
+
+
+/* Stylizacja dla etykiet */
+label {
+    display: block; 
+    margin-bottom: 5px; 
+    font-size: 16px;
+    font-weight: bold; 
+    color: white;
+    text-align: center;
+}
+
+input,
+select {
+    width: 100%; /* Dopasowanie do szerokości rodzica */
+    padding: 10px; /* Dodanie przestrzeni wewnętrznej */
+    margin: 10px 0; /* Odstęp między polami */
+    border: 1px solid #ccc; /* Obramowanie */
+    border-radius: 5px; /* Zaokrąglenie rogów */
+    font-size: 16px; /* Rozmiar czcionki */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Dodanie cienia */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Animacja przy focus */
+}
+
+
+
+/* Centrowanie formularza */
+.kalkulator {
+    text-align: center; /* Wyśrodkowanie wszystkich elementów */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: rgb(53, 57, 123); /* Kolor tła */
+    border-radius: 10px; /* Zaokrąglenie rogów */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Cień */
 }

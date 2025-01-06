@@ -1,0 +1,88 @@
+
+a {
+    display: inline-block;
+    margin: 10px 5px;
+    padding: 10px 15px;
+    font-size: 16px;
+    text-decoration: none;
+    color: white;
+    background-color: #007bff;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+a:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+textarea { 
+    width: 60%;
+    height: 200px;
+
+}
+.edit {
+    background-color: #4CAF50;
+    color: white; 
+    border: none; 
+    padding: 10px 20px; 
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px; 
+    margin: 10px 5px; 
+    cursor: pointer; 
+    border-radius: 5px; 
+}
+
+.delete {
+    background-color: #9e1023;
+    color: white; 
+    border: none; 
+    padding: 10px 20px; 
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px; 
+    margin: 10px 5px; 
+    cursor: pointer; 
+    border-radius: 5px; 
+}
+h3{
+    background-color: #1f836d;
+    color: white; 
+    padding: 10px 20px; 
+    width: 600px;
+    border-radius: 10px; /* Zaokrąglenie rogów */
+}
+input,
+select {
+    width: 500px;
+    padding: 10px; /* Dodanie przestrzeni wewnętrznej */
+    margin: 10px 0; /* Odstęp między polami */
+    border: 1px solid #000000; /* Obramowanie */
+    background-color: #e4e4e4;
+    border-radius: 10px; /* Zaokrąglenie rogów */
+    font-size: 16px; /* Rozmiar czcionki */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Dodanie cienia */
+}
+button{
+    width: 100px;
+    padding: 10px; /* Dodanie przestrzeni wewnętrznej */
+    margin: 10px 0; /* Odstęp między polami */
+    border: 1px solid #000000; /* Obramowanie */
+    background-color: #cc96b4;
+    border-radius: 10px; /* Zaokrąglenie rogów */
+    font-size: 16px; /* Rozmiar czcionki */
+    cursor: pointer;
+}
+input[type=submit]{
+    cursor: pointer;
+}
+
+.kategorie {
+    background-color: #470a29;
+    color: white; 
+    margin-block: 10px;
+    font-size: 23px;
+}

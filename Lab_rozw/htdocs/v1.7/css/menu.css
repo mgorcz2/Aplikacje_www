@@ -5,6 +5,7 @@ a{
 }
 .menu{
     width: 100%;
+    min-width: fit-content;
     position: fixed;  /*zawsze w tym samym miejscu menu*/
     top: 0;
     left: 0;
