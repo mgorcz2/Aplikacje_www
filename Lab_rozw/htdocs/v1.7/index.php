@@ -21,7 +21,8 @@
 // Dołączenie pliku PHP do obsługi wyświetlania stron
 require('showpage.php');
 
-if (!isset($_GET['idp']) || $_GET['idp'] == '') {
+$strona = PokazPodstrone(1);
+if (!isset($_GET['idp']) || $_GET['idp'] == '' || $_GET['idp'] == 'index') {
     $strona = PokazPodstrone(1);
 } elseif ($_GET['idp'] == 'calc') {
     $strona = PokazPodstrone(1); // Kalkulator
@@ -44,13 +45,15 @@ if (!isset($_GET['idp']) || $_GET['idp'] == '') {
 
 $menu = PokazPodstrone(2); 
 echo $menu; // Wyświetlenie menu
-echo $strona; // Wyświetlenie zawartości podstrony
+echo $strona; //wyswielt zawartosc podstrony
+
 
 // Informacje o autorze projektu
 $nr_indeksu = '169240';
 $nrGrupy = 'ISI 1';
 // echo 'Marcin Gorczynski '.$nr_indeksu.' GRUPA '.$nrGrupy;
 ?>
+<a href="index.php?idp='index'" class="home_button"><B>HOME</B></a>
 <a href="admin/login.php" class="admin_button">Zaloguj</a>
 </body>
 </html>

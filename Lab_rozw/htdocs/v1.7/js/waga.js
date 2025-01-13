@@ -22,7 +22,7 @@ function calculateWeight() {
 		}
 }
 
-//jQuery ktory zmienia wielkosc przycisku po wcisnieciu
+//jQuery ktory zmienia kolor przycisku po najechaniu
 $(document).ready(function() {
     $(document).on("mouseenter","button", function() {
         $(this).animate({

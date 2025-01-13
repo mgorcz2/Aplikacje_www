@@ -53,27 +53,27 @@ h3{
     color: white; 
     padding: 10px 20px; 
     width: 600px;
-    border-radius: 10px; /* Zaokrąglenie rogów */
+    border-radius: 10px; 
 }
 input,
 select {
     width: 500px;
-    padding: 10px; /* Dodanie przestrzeni wewnętrznej */
-    margin: 10px 0; /* Odstęp między polami */
-    border: 1px solid #000000; /* Obramowanie */
+    padding: 10px;
+    margin: 10px 0; 
+    border: 1px solid #000000; 
     background-color: #e4e4e4;
-    border-radius: 10px; /* Zaokrąglenie rogów */
-    font-size: 16px; /* Rozmiar czcionki */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Dodanie cienia */
+    border-radius: 10px; 
+    font-size: 16px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
 }
 button{
     width: 100px;
-    padding: 10px; /* Dodanie przestrzeni wewnętrznej */
-    margin: 10px 0; /* Odstęp między polami */
-    border: 1px solid #000000; /* Obramowanie */
+    padding: 10px; 
+    margin: 10px 0;
+    border: 1px solid #000000; 
     background-color: #cc96b4;
-    border-radius: 10px; /* Zaokrąglenie rogów */
-    font-size: 16px; /* Rozmiar czcionki */
+    border-radius: 10px; 
+    font-size: 16px; 
     cursor: pointer;
 }
 input[type=submit]{
