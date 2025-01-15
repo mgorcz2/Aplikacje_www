@@ -24,13 +24,30 @@ function DodajKategorie($nazwa, $matka = 0) {
     $matka = (int)$matka;
 
     // Dodawanie kategorii
-    $query = "INSERT INTO kategorie (nazwa, matka) VALUES ('$nazwa', $matka)";
+    $query = "INSERT INTO kategorie (nazwa, matka) VALUES ('$nazwa', $matka) LIMIT 1";
     if (mysqli_query($link, $query)) {
         echo "Kategoria została dodana!";
     } else {
         echo "Błąd podczas dodawania kategorii: " . mysqli_error($link);
     }
 }
+
+#aktualizacja
+if (isset($_POST['action']) && $_POST['action'] == 'update' && isset($_POST['id'])) {
+    $id = $_POST['id'];
+    $page_title = $_POST['page_title'];
+    $content = $_POST['content'];
+    $active = isset($_POST['active']) ? 1 : 0;
+
+    $query = "UPDATE page_list SET page_title = '$page_title', page_content = '$content', status = $active WHERE id = $id LIMIT 1";
+    
+    if (mysqli_query($link, $query)) {
+        echo "Podstrona została zaktualizowana!";
+    } else {
+        echo "Błąd aktualizacji: " . mysqli_error($link);
+    }
+}
+
 function EdytujKategorie($id, $nazwa, $matka) {
     global $link;
 

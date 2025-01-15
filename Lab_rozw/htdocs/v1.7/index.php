@@ -51,7 +51,7 @@ echo $strona; //wyswielt zawartosc podstrony
 // Informacje o autorze projektu
 $nr_indeksu = '169240';
 $nrGrupy = 'ISI 1';
-// echo 'Marcin Gorczynski '.$nr_indeksu.' GRUPA '.$nrGrupy;
+echo '<center>Marcin Gorczynski '.$nr_indeksu.' GRUPA '.$nrGrupy;
 ?>
 <a href="index.php?idp='index'" class="home_button"><B>HOME</B></a>
 <a href="admin/login.php" class="admin_button">Zaloguj</a>

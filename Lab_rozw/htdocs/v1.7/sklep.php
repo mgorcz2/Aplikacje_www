@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
         $_SESSION['cart'][$productId]['quantity'] += $quantity;
     } else {
         // Pobierz dane produktu z bazy
-        $query = "SELECT id, tytul, cena_netto, podatek_vat FROM produkty WHERE id = $productId LIMIT 1";
+        $query = "SELECT id, tytul, cena_netto, podatek_vat FROM produkty WHERE id = $productId";
         $result = mysqli_query($link, $query);
 
         if ($product = $result->fetch_assoc()) {
