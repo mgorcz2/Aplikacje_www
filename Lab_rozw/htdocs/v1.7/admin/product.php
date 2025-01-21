@@ -24,59 +24,38 @@ function DodajProdukt($dane) {
     $cena_netto = (float)$dane['cena_netto'];
     $podatek_vat = (float)$dane['podatek_vat'];
     $ilosc = (int)$dane['ilosc'];
-    $status = isset($dane['status']) ? (bool)$dane['status'] : 0;   //wysle 0 jesli nie zaznaczony
+    $status = isset($dane['status']) ? 1 : 0; // Wartość 1, jeśli zaznaczony, w przeciwnym razie 0
     $kategoria_id = (int)$dane['kategoria_id'];
     $gabaryt = mysqli_real_escape_string($link, $dane['gabaryt']);
-    $zdjecie = mysqli_real_escape_string($link, $dane['zdjecie']);
+    $zdjecie = null;
 
+    // Pobranie obrazu z pliku, jeśli został przesłany
+    if (isset($_FILES['zdjecie']) && is_uploaded_file($_FILES['zdjecie']['tmp_name'])) {
+        $zdjecie = file_get_contents($_FILES['zdjecie']['tmp_name']);
+    }
+
+    // Zapytanie SQL dla INSERT
     $query = "INSERT INTO produkty (tytul, opis, data_utworzenia, data_modyfikacji, data_wygasniecia, cena_netto, podatek_vat, ilosc, status, kategoria_id, gabaryt, zdjecie)
-              VALUES ('$tytul', '$opis', NOW(), NOW(), '$data_wygasniecia', $cena_netto, $podatek_vat, $ilosc, $status, $kategoria_id, '$gabaryt', '$zdjecie')";
+              VALUES ('$tytul', '$opis', NOW(), NOW(), '$data_wygasniecia', $cena_netto, $podatek_vat, $ilosc, $status, $kategoria_id, '$gabaryt', ?)";
 
-    if (mysqli_query($link, $query)) {
+    $stmt = mysqli_prepare($link, $query);
+
+    // Wysyłanie danych binarnych
+    mysqli_stmt_bind_param($stmt, 'b', $zdjecie);
+
+    // Jeśli dane są duże, wysyłanie ich w kawałkach
+    mysqli_stmt_send_long_data($stmt, 0, $zdjecie);
+
+    // Wykonanie zapytania
+    if (mysqli_stmt_execute($stmt)) {
         echo "Produkt został dodany!";
     } else {
         echo "Błąd: " . mysqli_error($link);
     }
 }
 
-//funkcja ktora edytuje produkt w bazie danych
-function EdytujProdukt2($id, $dane) {
-    global $link;
 
-    $id = (int)$id;
 
-    // Sprawdzenie, czy produkt o podanym ID istnieje
-    $query_check = "SELECT id FROM produkty WHERE id = $id LIMIT 1";
-    $result_check = mysqli_query($link, $query_check);
-
-    if (!$result_check || mysqli_num_rows($result_check) == 0) {
-        echo "Błąd: Produkt o podanym ID ($id) nie istnieje.";
-        return; // Przerywamy funkcję, jeśli produkt nie istnieje
-    }
-    
-    $tytul = mysqli_real_escape_string($link, $dane['tytul']);
-    $opis = mysqli_real_escape_string($link, $dane['opis']);
-    $data_wygasniecia = mysqli_real_escape_string($link, $dane['data_wygasniecia']);
-    $cena_netto = (float)$dane['cena_netto'];
-    $podatek_vat = (float)$dane['podatek_vat'];
-    $ilosc = (int)$dane['ilosc'];
-    $status = isset($dane['status']) ? (bool)$dane['status'] : 0;
-    $kategoria_id = (int)$dane['kategoria_id'];
-    $gabaryt = mysqli_real_escape_string($link, $dane['gabaryt']);
-    $zdjecie = mysqli_real_escape_string($link, $dane['zdjecie']);
-
-    $query = "UPDATE produkty
-              SET tytul = '$tytul', opis = '$opis', data_modyfikacji = NOW(), data_wygasniecia = '$data_wygasniecia',
-                  cena_netto = $cena_netto, podatek_vat = $podatek_vat, ilosc = $ilosc, status = $status,
-                  kategoria_id = $kategoria_id, gabaryt = '$gabaryt', zdjecie = '$zdjecie'
-              WHERE id = $id LIMIT 1";
-
-    if (mysqli_query($link, $query)) {
-        echo "Produkt został zaktualizowany!";
-    } else {
-        echo "Błąd: " . mysqli_error($link);
-    }
-}
 //funkcja ktora usuwa produkt z bazy danych
 function UsunProdukt($id) {
     global $link;
@@ -91,52 +70,6 @@ function UsunProdukt($id) {
     }
 }
 //funkcja ktora pobiera produkty z bazy danych
-
-
-function PokazProdukty2() {
-    global $link;
-
-    $query = "SELECT produkty.*, kategorie.nazwa AS kategoria_nazwa
-              FROM produkty
-              LEFT JOIN kategorie ON produkty.kategoria_id = kategorie.id";
-    $result = mysqli_query($link, $query);
-
-    if ($result) {
-        echo '<table border="1">';
-        echo '
-        <tr>
-            <th>ID</th>
-            <th>Tytuł</th>
-            <th>Cena netto</th>
-            <th>VAT</th>
-            <th>Ilość</th>
-            <th>Status</th>
-            <th>Kategoria</th>
-            <th>Opcje</th>
-        </tr>';
-        while ($row = mysqli_fetch_assoc($result)) {
-            echo '<tr>';
-            echo '<td>' . $row['id'] . '</td>';
-            echo '<td>' . htmlspecialchars($row['tytul']) . '</td>';
-            echo '<td>' . $row['cena_netto'] . '</td>';
-            echo '<td>' . $row['podatek_vat'] . '</td>';
-            echo '<td>' . $row['ilosc'] . '</td>';
-            echo '<td>' . $row['status'] . '</td>';
-            echo '<td>' . htmlspecialchars($row['kategoria_nazwa']) . '</td>';
-            echo '<td>
-                    <form method="post" style="display:inline;">
-                        <input type="hidden" name="id" value="' . $row['id'] . '">
-                        <button type="submit" class="delete" name="usun">Usuń</button>
-                    </form>
-                    <a href="?edit_id=' . $row['id'] . '">Edytuj</a>
-                  </td>';
-            echo '</tr>';
-        }
-        echo '</table>';
-    } else {
-        echo "Błąd: " . mysqli_error($link);
-    }
-}
 function PokazProdukty() {
     global $link;
 
@@ -173,7 +106,13 @@ function PokazProdukty() {
             echo '<td>' . htmlspecialchars($row['kategoria_nazwa']) . '</td>';
             echo '<td>' . $row['data_utworzenia'] . '</td>';
             echo '<td>' . $row['data_wygasniecia'] . '</td>';
-            echo '<td><img src="../img/' . htmlspecialchars($row['zdjecie']) . '" alt="Zdjęcie" style="width:100px;height:auto;"></td>';
+            echo '<td>';
+            if (!empty($row['zdjecie'])) {
+                echo '<img src="data:image/jpeg;base64,' . base64_encode($row['zdjecie']) . '" width="100" height="auto"/>';
+            } else {
+                echo 'Brak zdjęcia';
+            }
+            echo '</td>';
             echo '<td>
                     <form method="post" style="display:inline;">
                         <input type="hidden" name="id" value="' . $row['id'] . '">
@@ -197,33 +136,60 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         UsunProdukt($_POST['id']);
     }
 }
+//funkcja edytujaca produkt
 function EdytujProdukt($id, $dane) {
     global $link;
 
     $id = (int)$id;
     $tytul = mysqli_real_escape_string($link, $dane['tytul']);
     $opis = mysqli_real_escape_string($link, $dane['opis']);
-    #$data_wygasniecia = mysqli_real_escape_string($link, $dane['data_wygasniecia']);
     $cena_netto = (float)$dane['cena_netto'];
     $podatek_vat = (float)$dane['podatek_vat'];
     $ilosc = (int)$dane['ilosc'];
     $status = isset($dane['status']) ? 1 : 0;
     $kategoria_id = (int)$dane['kategoria_id'];
     $gabaryt = mysqli_real_escape_string($link, $dane['gabaryt']);
-    $zdjecie = mysqli_real_escape_string($link, $dane['zdjecie']);
+    $zdjecie = null;
 
+    // Pobranie zdjęcia, jeśli zostało przesłane
+    if (isset($_FILES['zdjecie']) && is_uploaded_file($_FILES['zdjecie']['tmp_name'])) {
+        $zdjecie = file_get_contents($_FILES['zdjecie']['tmp_name']);
+    }
+    if ($zdjecie !== null) {
+        echo '<p>Zdjęcie ma długość: ' . strlen($zdjecie) . ' bajtów</p>';
+        echo '<p>Zapytanie: UPDATE produkty z nowym zdjęciem</p>';
+    } else {
+        echo '<p>Brak nowego zdjęcia. Zapytanie: UPDATE produkty bez zmiany zdjęcia</p>';
+    }
+    if($zdjecie !==null){
+        $query = "UPDATE produkty
+          SET tytul = '$tytul', opis = '$opis', data_modyfikacji = NOW(),
+              cena_netto = $cena_netto, podatek_vat = $podatek_vat, ilosc = $ilosc, status = $status,
+              kategoria_id = $kategoria_id, gabaryt = '$gabaryt', zdjecie = ?
+          WHERE id = $id";
+        $stmt = mysqli_prepare($link, $query);
+
+        // Wysyłanie danych binarnych
+        mysqli_stmt_bind_param($stmt, 'b', $zdjecie);
+
+        // Jeśli dane są duże
+        mysqli_stmt_send_long_data($stmt, 0, $zdjecie);
+    }else{
     $query = "UPDATE produkty
-              SET tytul = '$tytul', opis = '$opis', data_modyfikacji = NOW(),
-                  cena_netto = $cena_netto, podatek_vat = $podatek_vat, ilosc = $ilosc, status = $status,
-                  kategoria_id = $kategoria_id, gabaryt = '$gabaryt', zdjecie = '$zdjecie'
-              WHERE id = $id LIMIT 1";
-
-    if (mysqli_query($link, $query)) {
+          SET tytul = '$tytul', opis = '$opis', data_modyfikacji = NOW(),
+              cena_netto = $cena_netto, podatek_vat = $podatek_vat, ilosc = $ilosc, status = $status,
+              kategoria_id = $kategoria_id, gabaryt = '$gabaryt'
+          WHERE id = $id";
+    $stmt = mysqli_prepare($link, $query);
+    }
+    if (mysqli_stmt_execute($stmt)) {
         echo "Produkt został zaktualizowany!";
     } else {
         echo "Błąd: " . mysqli_error($link);
     }
 }
+
+
 echo '<h2>Zarządzaj produktami</h2>';
 PokazProdukty();
 $productToEdit = null;
@@ -245,7 +211,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['edit_id'])) {
 // -------------------------------
 if ($productToEdit) {
     echo '<h3>Edytuj Produkt</h3>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <input type="hidden" name="id" value="' . htmlspecialchars($productToEdit['id']) . '">
         Tytuł: <input type="text" name="tytul" value="' . htmlspecialchars($productToEdit['tytul']) . '" required><br>
         Opis: <textarea name="opis">' . htmlspecialchars($productToEdit['opis']) . '</textarea><br>
@@ -256,7 +222,7 @@ if ($productToEdit) {
         Status: <input type="checkbox" name="status" ' . ($productToEdit['status'] ? 'checked' : '') . '><br>
         Kategoria ID: <input type="number" name="kategoria_id" value="' . htmlspecialchars($productToEdit['kategoria_id']) . '" required><br>
         Gabaryt: <input type="text" name="gabaryt" value="' . htmlspecialchars($productToEdit['gabaryt']) . '" required><br>
-        Zdjęcie (link): <input type="text" name="zdjecie" value="' . htmlspecialchars($productToEdit['zdjecie']) . '" required><br>
+        Zdjęcie: <input type="file" name="zdjecie" accept="image/*"><br>
         <button type="submit" name="edytuj">Edytuj Produkt</button>
     </form>';
 }
@@ -265,7 +231,7 @@ if ($productToEdit) {
 // Formularz dodawania produktu
 // -------------------------------
 echo '<h3>Dodaj Produkt</h3>
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     Tytuł: <input type="text" name="tytul" required><br>
     Opis: <textarea name="opis" required></textarea><br>
     Data wygaśnięcia: <input type="date" name="data_wygasniecia" required><br>
@@ -275,7 +241,7 @@ echo '<h3>Dodaj Produkt</h3>
     Status dostępności: <input type="checkbox" name="status"><br>
     Kategoria ID: <input type="number" name="kategoria_id" required><br>
     Gabaryt: <input type="text" name="gabaryt" required><br>
-    Zdjęcie (link): <input type="text" name="zdjecie" required><br>
+    Zdjęcie: <input type="file" name="zdjecie" accept="image/*"><br>
     <button type="submit" name="dodaj">Dodaj Produkt</button>
 </form>';
 

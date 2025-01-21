@@ -56,14 +56,17 @@ function DodajProduktyDoSklepu() {
     }
     
     $html='';
-    // generuje sekcj dla każdej kategorii
+    // generuje sekcji dla każdej kategorii
     foreach ($kategorie as $kategoria => $produkty) {
         $html .= '<h2>' . htmlspecialchars($kategoria) . '</h2>';
         foreach ($produkty as $produkt) {
             $cena_brutto = $produkt['cena_netto'] * (1 + $produkt['podatek_vat'] / 100);
             $html .= '<div class="produkt">';
-            $html .= '<img src="' . htmlspecialchars($produkt['zdjecie']) . '" alt="' . htmlspecialchars($produkt['tytul']) . '">';
-            $html .= '<img src="img/' . htmlspecialchars($produkt['zdjecie']) . '" alt="Zdjęcie" style="width:200px;height:auto;"></td>';
+            if (!empty($produkt['zdjecie'])) {
+                $html .= '<img src="data:image/jpeg;base64,' . base64_encode($produkt['zdjecie']) . '" alt="Zdjęcie" style="width:200px;height:auto;"></td>';
+            } else {
+                $html .= 'Brak zdjęcia';
+            }
             $html .= '<p class="nazwa"><b>' . htmlspecialchars($produkt['tytul']) . '</b></p>';
             $html .= '<p class="p">Status: ' . ($produkt['status'] == 1 ? 'Dostępny' : 'Niedostępny') . '</p>';
             $html .= '<p class="p">Ilość: ' . htmlspecialchars($produkt['ilosc']) . '</p>';
